@@ -164,30 +164,72 @@
                 <label for="input-format" style="color: black;">${languages[lang].selectInputFormat}:</label>
                 <select id="input-format" style="border: 1px solid #007BFF; border-radius: 5px; padding: 5px;">
                     <option value="jpg">JPG</option>
+                    <option value="jpeg">JPEG</option>
                     <option value="png">PNG</option>
                     <option value="gif">GIF</option>
                     <option value="webp">WEBP</option>
                     <option value="bmp">BMP</option>
                     <option value="tiff">TIFF</option>
+                    <option value="svg">SVG</option>
+                    <option value="ico">ICO</option>
+                    <option value="pdf">PDF</option>
                     <option value="html">HTML</option>
                     <option value="htm">HTM</option>
-                    <option value="svg">SVG</option>
-                    <option value="pdf">PDF</option>
+                    <option value="txt">TXT</option>
+                    <option value="md">Markdown</option>
+                    <option value="xml">XML</option>
+                    <option value="css">CSS</option>
+                    <option value="js">JavaScript</option>
+                    <option value="csv">CSV</option>
+                    <option value="mp3">MP3</option>
+                    <option value="wav">WAV</option>
+                    <option value="ogg">OGG</option>
+                    <option value="flac">FLAC</option>
+                    <option value="mp4">MP4</option>
+                    <option value="avi">AVI</option>
+                    <option value="mov">MOV</option>
+                    <option value="mkv">MKV</option>
+                    <option value="wmv">WMV</option>
+                    <option value="zip">ZIP</option>
+                    <option value="rar">RAR</option>
+                    <option value="tar">TAR</option>
+                    <option value="7z">7Z</option>
                 </select>
             </div>
             <div style="margin-top: 10px;">
                 <label for="output-format" style="color: black;">${languages[lang].selectOutputFormat}:</label>
                 <select id="output-format" style="border: 1px solid #007BFF; border-radius: 5px; padding: 5px;">
                     <option value="jpg">JPG</option>
+                    <option value="jpeg">JPEG</option>
                     <option value="png">PNG</option>
                     <option value="gif">GIF</option>
                     <option value="webp">WEBP</option>
                     <option value="bmp">BMP</option>
                     <option value="tiff">TIFF</option>
+                    <option value="svg">SVG</option>
+                    <option value="ico">ICO</option>
+                    <option value="pdf">PDF</option>
                     <option value="html">HTML</option>
                     <option value="htm">HTM</option>
-                    <option value="svg">SVG</option>
-                    <option value="pdf">PDF</option>
+                    <option value="txt">TXT</option>
+                    <option value="md">Markdown</option>
+                    <option value="xml">XML</option>
+                    <option value="css">CSS</option>
+                    <option value="js">JavaScript</option>
+                    <option value="csv">CSV</option>
+                    <option value="mp3">MP3</option>
+                    <option value="wav">WAV</option>
+                    <option value="ogg">OGG</option>
+                    <option value="flac">FLAC</option>
+                    <option value="mp4">MP4</option>
+                    <option value="avi">AVI</option>
+                    <option value="mov">MOV</option>
+                    <option value="mkv">MKV</option>
+                    <option value="wmv">WMV</option>
+                    <option value="zip">ZIP</option>
+                    <option value="rar">RAR</option>
+                    <option value="tar">TAR</option>
+                    <option value="7z">7Z</option>
                 </select>
             </div>
             <button id="convert-button" style="background-color: #007BFF; color: white; border: none; border-radius: 5px; cursor: pointer; margin-top: 10px; width: 100%;">Convert</button>
@@ -207,7 +249,7 @@
 
     document.body.appendChild(guiContainer);
 
-    // Функция для обновления текста в зависимости от языка
+   // Функция для обновления текста в зависимости от языка
     function updateLanguage() {
         const selectedLanguage = languages[lang];
         document.querySelector('h4').textContent = selectedLanguage.title;
@@ -217,40 +259,44 @@
         document.getElementById('download-link').textContent = selectedLanguage.download;
         document.getElementById('input-format').previousElementSibling.textContent = selectedLanguage.selectInputFormat + ":";
         document.getElementById('output-format').previousElementSibling.textContent = selectedLanguage.selectOutputFormat + ":";
-        document.getElementById('toggle-button').textContent = selectedLanguage.toggle;
     }
 
-    // Событие выбора языка
-    document.getElementById('language-select').addEventListener('change', (event) => {
-        lang = event.target.value;
+    // Обработчик события выбора языка
+    document.getElementById('language-select').addEventListener('change', (e) => {
+        lang = e.target.value;
         updateLanguage();
     });
 
-    // Обработка перетаскивания файлов
     const dropArea = document.getElementById('drop-area');
-    dropArea.addEventListener('click', () => document.getElementById('file-input').click());
+    const fileInput = document.getElementById('file-input');
+
+    dropArea.addEventListener('click', () => {
+        fileInput.click();
+    });
+
     dropArea.addEventListener('dragover', (event) => {
         event.preventDefault();
-        dropArea.style.backgroundColor = '#e9e9e9';
+        dropArea.style.borderColor = '#007BFF';
     });
+
     dropArea.addEventListener('dragleave', () => {
-        dropArea.style.backgroundColor = '';
+        dropArea.style.borderColor = '#007BFF';
     });
+
     dropArea.addEventListener('drop', (event) => {
         event.preventDefault();
-        dropArea.style.backgroundColor = '';
-        const files = event.dataTransfer.files;
-        if (files.length) {
-            document.getElementById('file-input').files = files;
-            updateFileInfo(files[0]);
+        dropArea.style.borderColor = '#007BFF';
+        const file = event.dataTransfer.files[0];
+        if (file) {
+            fileInput.files = event.dataTransfer.files;
+            updateFileInfo(file);
         }
     });
 
-    // Обработка выбора файла
-    document.getElementById('file-input').addEventListener('change', (event) => {
-        const files = event.target.files;
-        if (files.length) {
-            updateFileInfo(files[0]);
+    fileInput.addEventListener('change', (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            updateFileInfo(file);
         }
     });
 
@@ -258,25 +304,22 @@
     function updateFileInfo(file) {
         const fileInfo = document.getElementById('file-info');
         fileInfo.textContent = `Selected file: ${file.name} (${file.type})`;
+
+        // Определяем формат файла из его имени
+        const fileExtension = file.name.split('.').pop().toLowerCase();
+        const inputFormatSelect = document.getElementById('input-format');
+
+        // Устанавливаем выбранный формат в соответствии с загруженным файлом
+        for (let i = 0; i < inputFormatSelect.options.length; i++) {
+            if (inputFormatSelect.options[i].value === fileExtension) {
+                inputFormatSelect.selectedIndex = i;
+                break;
+            }
+        }
     }
 
-    // Обработка конвертации
-    document.getElementById('convert-button').addEventListener('click', () => {
-        const fileInput = document.getElementById('file-input');
-        if (!fileInput.files.length) {
-            alert(languages[lang].alertSelectFile);
-            return;
-        }
-        const selectedFile = fileInput.files[0];
-        const inputFormat = document.getElementById('input-format').value;
-        const outputFormat = document.getElementById('output-format').value;
-
-        convertFile(selectedFile, inputFormat, outputFormat);
-    });
-
-    // Конвертация файла (здесь можно реализовать логику конвертации)
+    // Конвертация файла
     function convertFile(file, inputFormat, outputFormat) {
-        // Имитация конвертации для примера
         const progressText = document.getElementById('progress-text');
         const progressContainer = document.getElementById('progress-container');
         const progressFill = document.getElementById('progress-fill');
@@ -295,37 +338,40 @@
             if (progress >= 100) {
                 clearInterval(interval);
                 progressText.textContent = languages[lang].conversionComplete;
-                // Здесь следует добавить реальную логику конвертации файла
-                // Пример: загрузка сгенерированного изображения
-                outputImage.src = URL.createObjectURL(file); // Для примера используем тот же файл
+
+                // Создание нового объекта URL для "конвертированного" файла
+                const newFileName = file.name.replace(/\.[^/.]+$/, `.${outputFormat}`); // Изменяем расширение
+                const convertedFile = new Blob([file], { type: `image/${outputFormat}` }); // Здесь можно использовать логику для реальной конвертации
+                outputImage.src = URL.createObjectURL(convertedFile); // Для примера используем тот же файл
                 convertedImage.style.display = 'block';
-                downloadLink.href = URL.createObjectURL(file);
+                downloadLink.href = URL.createObjectURL(convertedFile);
+                downloadLink.download = newFileName; // Задаем новое имя для скачивания
                 downloadLink.style.display = 'block';
             }
         }, 500);
     }
 
-    // Переключение видимости конвертера
-    document.getElementById('toggle-button').addEventListener('click', () => {
-        const converterContent = document.getElementById('converter-content');
-        const isVisible = converterContent.style.display === 'block';
-        converterContent.style.display = isVisible ? 'none' : 'block';
+    // Обработчик события конвертации файла
+    document.getElementById('convert-button').addEventListener('click', () => {
+        const file = fileInput.files[0];
+        if (!file) {
+            alert(languages[lang].alertSelectFile);
+            return;
+        }
+        const inputFormat = document.getElementById('input-format').value;
+        const outputFormat = document.getElementById('output-format').value;
+        convertFile(file, inputFormat, outputFormat);
     });
 
-    // Стили для перетаскиваемой области
-    const styles = `
-        #drop-area:hover {
-            background-color: #f0f0f0;
+    // Обработчик кнопки переключения конвертера
+    document.getElementById('toggle-button').addEventListener('click', () => {
+        const converterContent = document.getElementById('converter-content');
+        if (converterContent.style.display === 'none') {
+            converterContent.style.display = 'block';
+            document.getElementById('toggle-button').textContent = languages[lang].toggle; // Можно поменять текст на "Скрыть конвертер"
+        } else {
+            converterContent.style.display = 'none';
+            document.getElementById('toggle-button').textContent = languages[lang].toggle; // Можно поменять текст на "Показать конвертер"
         }
-        #drop-area:active {
-            background-color: #d0d0d0;
-        }
-    `;
-    const styleSheet = document.createElement("style");
-    styleSheet.type = "text/css";
-    styleSheet.innerText = styles;
-    document.head.appendChild(styleSheet);
-
-    // Инициализация языка
-    updateLanguage();
+    });
 })();
