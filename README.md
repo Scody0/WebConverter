@@ -368,12 +368,3 @@ Para consultas o solicitudes, comuníquese con el autor:
 - GitHub: [https://github.com/Scody0](https://github.com/Scody0)
 
 ---
-
-### Список усіх можливих форматів файлів для конвертації
-- **Зображення:** JPG, JPEG, PNG, GIF, BMP, TIFF, WEBP, SVG
-- **Веб-формати:** HTML, HTM, XML, CSS
-- **Документи:** DOC, DOCX, PDF, TXT, RTF, ODT
-- **Аудіо:** MP3, WAV, OGG, FLAC, AAC
-- **Відео:** MP4, AVI, MOV, MKV, WMV
-
-Цей список може бути розширено залежно від ваших потреб.
